@@ -1,0 +1,136 @@
+# gsc-docker - Helper script for GitSense Chat Docker management
+# Component: gsc-docker helper script
+# Block-UUID: 4b5e5f71-8029-4b65-a089-684cea0642f7
+# Parent-UUID: N/A
+# Version: 1.0.1
+# Description: Manages the GitSense Chat Docker container (start, stop).
+# Language: Bash
+# Created-at: 2025-08-10T18:46:31.986Z
+# Authors: Gemini 2.5 Flash Thinking (v1.0.0), Gemini 2.5 Flash Thinking (v1.0.1)
+
+
+#!/bin/bash
+
+CONTAINER_NAME="gitsense-chat"
+IMAGE_NAME="gitsense/chat"
+DATA_VOLUME_NAME="gitsense-chat-data"
+APP_PORT="3357"
+ENV_FILE=".env"
+
+# Function to check if a container exists (running or stopped)
+container_exists() {
+    docker ps -a --filter "name=$CONTAINER_NAME" --format "{{.Names}}" | grep -q "$CONTAINER_NAME"
+}
+
+# Function to check if a container is running
+container_is_running() {
+    docker ps --filter "name=$CONTAINER_NAME" --format "{{.Names}}" | grep -q "$CONTAINER_NAME"
+}
+
+# Function to check if a Docker volume exists
+volume_exists() {
+    docker volume ls --format "{{.Name}}" | grep -q "$DATA_VOLUME_NAME"
+}
+
+start_app() {
+    echo "Starting GitSense Chat Docker container..."
+
+    # Check for .env file
+    if [ ! -f "$ENV_FILE" ]; then
+        echo "WARNING: '$ENV_FILE' not found in the current directory ($(pwd))."
+        echo "         The application might not function correctly without API keys."
+        echo "         Please create a '$ENV_FILE' based on '.env.example' if needed."
+    fi
+
+    # Check if container already exists
+    if container_exists; then
+        if container_is_running; then
+            echo "Container '$CONTAINER_NAME' is already running."
+            exit 0
+        else
+            echo "Container '$CONTAINER_NAME' exists but is stopped. Removing it..."
+            docker rm "$CONTAINER_NAME"
+        fi
+    fi
+
+    # Create data volume if it doesn't exist
+    if ! volume_exists; then
+        echo "Creating Docker volume '$DATA_VOLUME_NAME' for persistent data..."
+        docker volume create "$DATA_VOLUME_NAME"
+    fi
+
+    # Build the volume mount argument
+    VOLUME_MOUNTS="-v $DATA_VOLUME_NAME:/app/data"
+
+    # Conditionally add .env file mount
+    if [ -f "$ENV_FILE" ]; then
+        VOLUME_MOUNTS="$VOLUME_MOUNTS -v \"$(pwd)/$ENV_FILE\":/app/$ENV_FILE:ro"
+    fi
+
+    # Run the Docker container
+    docker run -d \
+        --name "$CONTAINER_NAME" \
+        -p "$APP_PORT:$APP_PORT" \
+        $VOLUME_MOUNTS \
+        --restart unless-stopped \
+        "$IMAGE_NAME"
+
+    if [ $? -eq 0 ]; then
+        echo "GitSense Chat container '$CONTAINER_NAME' started successfully on port $APP_PORT."
+        echo "Access it at: http://localhost:$APP_PORT"
+        echo "You can view logs with: docker logs -f $CONTAINER_NAME"
+    else
+        echo "Failed to start GitSense Chat container."
+        exit 1
+    fi
+}
+
+stop_app() {
+    echo "Stopping GitSense Chat Docker container..."
+    if container_is_running; then
+        docker stop "$CONTAINER_NAME"
+        echo "Container '$CONTAINER_NAME' stopped."
+    else
+        echo "Container '$CONTAINER_NAME' is not running."
+    fi
+
+    if container_exists; then
+        echo "Removing container '$CONTAINER_NAME'..."
+        docker rm "$CONTAINER_NAME"
+        echo "Container '$CONTAINER_NAME' removed."
+    else
+        echo "Container '$CONTAINER_NAME' does not exist."
+    fi
+}
+
+show_status() {
+    echo "GitSense Chat container status:"
+    docker ps -a --filter "name=$CONTAINER_NAME"
+}
+
+show_logs() {
+    echo "GitSense Chat container logs (Ctrl+C to exit):"
+    docker logs -f "$CONTAINER_NAME"
+}
+
+# Main script logic
+case "$1" in
+    start)
+        start_app
+        ;;
+    stop)
+        stop_app
+        ;;
+    status)
+        show_status
+        ;;
+    logs)
+        show_logs
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status|logs}"
+        exit 1
+        ;;
+esac
+
+exit 0

@@ -1,0 +1,27 @@
+# Component: gscb CLI Wrapper
+# Block-UUID: 6d24ef6d-e43b-42bf-9138-c45ec0d3b1aa
+# Parent-UUID: N/A
+# Version: 1.0.0
+# Description: A wrapper script to execute the @gitsense/gscb-cli from node_modules.
+# Language: Bash
+# Created-at: 2025-08-08T19:23:38.722Z
+# Authors: Gemini 2.5 Flash Thinking (v1.0.0)
+
+
+#!/bin/bash
+
+# Resolve the directory where this script is located
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+
+# Define the path to the gscb.js executable relative to the script's directory
+GSCB_CLI_PATH="${SCRIPT_DIR}/../node_modules/@gitsense/gscb-cli/dist/bin/gscb.js"
+
+# Check if the gscb.js file exists
+if [ ! -f "$GSCB_CLI_PATH" ]; then
+  echo "Error: @gitsense/gscb-cli not found at $GSCB_CLI_PATH" >&2
+  echo "Please ensure you have run 'npm install' in the parent directory." >&2
+  exit 1
+fi
+
+# Execute the gscb.js script using node, passing all arguments
+node "$GSCB_CLI_PATH" "$@"
