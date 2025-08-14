@@ -1,0 +1,138 @@
+{
+    "models": [
+        {
+            "name": "Claude 4 Sonnet",
+            "providers": [
+                {
+                    "name": "Anthropic",
+                    "modelId": "claude-sonnet-4-20250514",
+                    "maxTokens": 20000
+                }
+            ]
+        },
+        {
+            "name": "Gemini 2.5 Pro",
+            "providers": [
+                {
+                    "name": "Google",
+                    "modelId": "gemini-2.5-pro",
+                    "maxTokens": 20000
+                }
+            ]
+        },
+        {
+            "name": "Gemini 2.5 Flash",
+            "maxTokens": 20000,
+            "providers": [
+                {
+                    "name": "Google",
+                    "modelId": "gemini-2.5-flash",
+                    "maxTokens": 20000,
+                    "includeThoughts": false
+                }
+            ]
+        },
+        {
+            "name": "Gemini 2.5 Flash Lite",
+            "maxTokens": 20000,
+            "canBeUsedForAnalyzing": true,
+            "providers": [
+                {
+                    "name": "Google",
+                    "modelId": "gemini-2.5-flash-lite",
+                    "maxTokens": "20000"
+                }
+            ]
+        },
+        {
+            "name": "GPT-4o mini",
+            "providers": [
+                {
+                    "name": "OpenAI",
+                    "modelId": "gpt-4o-mini",
+                    "maxTokens": 8192
+                }
+            ],
+            "default": true
+        }
+    ],
+    "prompts": [
+        {
+            "type": "system",
+            "name": "Coding Assistant",
+            "file": "coding-assistant.md",
+            "default": true
+        },
+        {
+            "type": "system",
+            "name": "Technical Writing Checker",
+            "file": "technical-writing-checker.md"
+        },
+        {
+            "type": "system",
+            "name": "Technical Writing Assistant",
+            "file": "technical-writing-assistant.md"
+        }
+    ],
+    "providers": [
+        {
+            "name": "Anthropic",
+            "apiKeyName": "ANTHROPIC_API_KEY"
+        },
+        {
+            "name": "DeepInfra",
+            "apiKeyName": "DEEPINFRA_API_KEY",
+            "baseURL": "https://api.deepinfra.com/v1/openai"
+        },
+        {
+            "name": "DeepSeek",
+            "apiKeyName": "DEEPSEEK_API_KEY",
+            "baseURL": "https://api.deepseek.com"
+        },
+        {
+            "name": "Google",
+            "apiKeyName": "GEMINI_API_KEY",
+            "baseURL": "https://generativelanguage.googleapis.com/v1beta/openai"
+        },
+        {
+            "name": "Groq",
+            "apiKeyName": "GROQ_API_KEY"
+        },
+        {
+            "name": "OpenAI",
+            "apiKeyName": "OPENAI_API_KEY"
+        },
+        {
+            "name": "OpenRouter",
+            "apiKeyName": "OPENROUTER_API_KEY",
+            "baseURL": "https://openrouter.ai/api/v1"
+        },
+        {
+            "name": "together.ai",
+            "apiKeyName": "TOGETHER_API_KEY",
+            "baseURL": "https://api.together.xyz/v1"
+        }
+    ],
+    "cache": {
+        "maxTime": {
+            "getChats": "25h",
+            "getReport": "500ms"
+        }
+    },
+    "history": {
+        "rowsPerPage": 20
+    },
+    "permissions": {
+        "deleteChat": true,
+        "deleteChatMessage": true,
+        "editChatMessage": true
+    },
+    "defaultTemperature": 0,
+    "defaultModelCanBeUsedForAnalyzing": true,
+    "generateChatTitle": {
+        "enable": true,
+        "model": "default"
+    },
+    "maxChatCompletionSize": null,
+    "noProviderFatal": true
+}
