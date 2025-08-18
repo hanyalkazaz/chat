@@ -41,7 +41,7 @@ GitSense Chat is more than just a chat interface; it's a powerful platform desig
 ### No Lock-in, Just Better Workflows
 <a id=no-lock-in></a>
 
-GitSense Chat is designed to be your **starting point for every LLM conversation**, not a walled garden. We empower you to define precise context, generate traceable code, and manage knowledge with great efficiency. Once you've crafted your perfect LLM interaction, our **Messages Tool** makes it dead simple to extract and copy your conversation content-including code, notes, and context-for seamless use in your IDE (like VS Code or Aider), other LLM solutions, or any documentation.
+GitSense Chat is designed to be your **starting point for every LLM conversation**, not a walled garden. We empower you to define precise context, generate traceable code, and manage knowledge with great efficiency. Once you've crafted your perfect LLM interaction, our **Messages Tool** makes it dead simple to extract and copy your conversation content-including code, notes, and context-for seamless use in your IDE, other LLM solutions, or any documentation.
 
 We're confident that once you experience the clarity, control, and traceability GitSense Chat provides, you'll want to come back for its other rich features. Our goal is to enhance your existing workflows, not replace them.
 
