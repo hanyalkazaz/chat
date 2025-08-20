@@ -17,47 +17,99 @@
  * Copyright (c) 2025 GitSense. All rights reserved.
  */
 
-let DomUtils=require("../../../../utils/DomUtils"),{CodeBlockUtils,ChatUtils,MessageUtils}=require("@gitsense/gsc-utils"),MessageService=require("../../../../services/MessageService"),DEMO_CONSTANTS=require("../constants"),DemoUtils=require("../utils/demoUtils"),INTRO_SCENE1_TRIGGER_CONTENT="# Welcome to GitSense Chat!",ANALYZE_AUTOMATED_COMMAND="Review the comments in all the files in context.  For each of them, identify any spelling mistakes they may have.",SHOW_ANALYZERS_AUTOMATED_COMMAND="!ask show production ready analyzers that can help with code quality",SHOW_ANALYZER_SCHEMA_AUTOMATED_COMMAND="!ask show the schema for the code comment analyzer",FIND_FILES_AUTOMATED_COMMAND="!ask using the production ready analyzers, find all files with spelling mistakes in the hello and hey world repository",BUILD_CONTEXT_BUNDLE_COMMAND="Create a context bundle with just the JavaScript and Rust files",INTRO_SC4_AUTOMATED_COMMAND="From the files in context, create a new context bundle that only includes JavaScript and Rust files.",introductionDemo={id:"introduction",name:"Context Engineering & AI Search Demo",description:"Experience how GitSense Chat redefines context engineering and AI search.",scenes:[{id:"intro",action:"typeAndAppend",contentToType:`
-In this interactive demo, we'll show how you can build relevant context by simply chatting to ensure LLMs have the right information to produce better code.
+let DomUtils=require("../../../../utils/DomUtils"),{CodeBlockUtils,ChatUtils,MessageUtils}=require("@gitsense/gsc-utils"),MessageService=require("../../../../services/MessageService"),DEMO_CONSTANTS=require("../constants"),DemoUtils=require("../utils/demoUtils"),MAIN_INTRO_SCENE_TRIGGER="# Welcome to GitSense Chat!",DEMO_1="## Demo 1: Generating Code",DEMO_2="## Demo 2: Tracing Code Changes",DEMO_3="## Demo 3: Discovering Analyzers",DEMO_4="## Demo 4: Exploring Analyzer Schemas",DEMO_5="## Demo 5: Performing Semantic Search",DEMO_6="## Demo 6: Loading AI-Curated Context",DEMO_7="## Demo 7: AI-Assisted Code Analysis",DEMO_8="## Demo 8: Refining Context with LLMs",DEMO_9="## Demo 9: Loading Focused Context",DEMO_10="## Demo 10: Managing Context for Reasoning and Cost",GENERATE_HELLO_WORLD_COMMAND='Generate a "Hello World" program in JavaScript. Only provide the code block, no commentary or pleasantries.',CHANGE_HELLO_TO_HEY_COMMAND='Change "Hello" to "Hey" in the JavaScript program and provide a patch. Only provide the code block, no commentary or pleasantries.',ANALYZE_AUTOMATED_COMMAND="Review the comments in all the files in context.  For each of them, identify any spelling mistakes they may have.",LIST_ANALYZERS_AUTOMATED_COMMAND="!ask list production ready analyzers that can help with code quality",SHOW_ANALYZER_SCHEMA_AUTOMATED_COMMAND="!ask show the schema for the code comment analyzer",FIND_FILES_AUTOMATED_COMMAND="!ask using the production ready analyzers, find all files with spelling mistakes in the hello and hey world repository",BUILD_CONTEXT_BUNDLE_COMMAND="Create a context bundle with just the JavaScript and Rust files",INTRO_SC4_AUTOMATED_COMMAND="From the files in context, create a new context bundle that only includes JavaScript and Rust files.",introductionDemo={id:"introduction",name:"Context Engineering & AI Search Demo",description:"Experience how GitSense Chat redefines context engineering and AI search.",scenes:[{id:"intro",action:"typeAndAppend",contentToType:`
+In this interactive demo, we'll show how you can leverage GitSense Chat to generate and trace code with LLMs, and how to build relevant context by simply chatting to ensure LLMs have the right information to produce better code.
 
 You'll experience:
 
-*   **Demo 1: Discovering Analyzers**
-*   **Demo 2: Exploring Analyzer Schemas**
-*   **Demo 3: Performing Semantic Search**
-*   **Demo 4: Loading AI-Curated Context**
-*   **Demo 5: AI-Assisted Code Analysis**
-*   **Demo 6: Refining Context with LLMs**
-*   **Demo 7: Loading Focused Context**
-*   **Demo 8: Managing Context for Reasoning and Cost**
+*   **Demo 1: Generating Code**
+*   **Demo 2: Tracing Code Changes**
+*   **Demo 3: Discovering Analyzers**
+*   **Demo 4: Exploring Analyzer Schemas**
+*   **Demo 5: Performing Semantic Search**
+*   **Demo 6: Loading AI-Curated Context**
+*   **Demo 7: AI-Assisted Code Analysis**
+*   **Demo 8: Refining Context with LLMs**
+*   **Demo 9: Loading Focused Context**
+*   **Demo 10: Managing Context for Reasoning and Cost**
 
-### Live Search Responses
+**LLM responses are live.** If the demo suddenly stops, cannot continue or becomes somewhat nonsensical, it is because we were unable to predict what the LLM would return. Most of the time, you should be able to delete messages and then click the **Send Message** link again to keep going. If that does not work, you will need to start another demo.
 
-If the demo suddenly stops, cannot continue or becomes somewhat nonsensical, it is because we were unable to predict what the LLM would return. Most state-of-the-art (SOTA) models should be able to follow the instructions in this demo, but there is no guarantee that even the best models will not fail to answer or produce the expected output. 
+### Let's Start
 
-Most of the time, you should be able to delete messages and then click the **Send Message** link again to keep going. If that does not work, you will need to start another demo.
+Click the link below to start the demo.
 
----
+[**Start Demo**]()
 
-## Demo 1: Discovering Analyzers
+> **Chat Input Disabled:** The chat input is currently disabled, but will re-enable once the demo has finished.
+            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(n,e,t,o)=>{t=t.querySelector("a");t?t.onclick=async e=>{e.preventDefault();var{widget:e,chat:t}=o;try{await MessageService.newChatMessage(e,t.id,{parentId:n.id,model:t.main_model,role:"assistant",message:"",meta:{demo:{scene:{id:"demo-1"}}},visibility:"public"});o.updateChat()}catch(e){console.log(e)}}:console.error(`No send link in current scene ${e.id} found`)},nextSceneId:"demo-3"},{id:"demo-1",action:"typeAndAppend",contentToType:`
+${DEMO_1}
+
+We'll start this demo by generating a basic "Hello World" program in JavaScript using GitSense Chat.
+
+If you look at the chat input below, you'll see the following instructions is ready to be sent:
+
+\`\`\`
+${GENERATE_HELLO_WORLD_COMMAND}
+\`\`\`
+
+Click the link below to send the message to generate the "Hello World" program.
+
+[**Send Message**]()
+            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(GENERATE_HELLO_WORLD_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"demo-2-blank"},{id:"demo-2-blank",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{n=MessageUtils.getMessageById(n.chat,e.parent_id);return!(!n||n.message.trim()!==GENERATE_HELLO_WORLD_COMMAND)},nextSceneId:"demo-2"},{id:"demo-2",action:"typeAndAppend",contentToType:`
+ ${DEMO_2}
+ 
+ ## What Happended
+ 
+In the previous step, the LLM successfully generated the "Hello World" JavaScript program.
+
+Take a moment to look at the header of the generated code block. You'll see a \`Block-UUID\` (e.g., \`Block-UUID: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\`). This is a **unique identifier** for that specific piece of code. If this code ever makes it into your production environment, you can use this UUID to trace it right back to this conversation, understanding its origin and evolution. This is part of how GitSense Chat Flash provides **unparalleled traceability** for all AI-generated code.
+ 
+## Next Steps
+ 
+Now, let's see how we can track changes to AI-generated code. We'll ask the LLM to modify the "Hello World" program.
+
+When the LLM responds, notice that the new output (whether a patch or full code) will include a \`Parent-UUID\` that points back to the \`Block-UUID\` of the original code. Its version number will also be incremented. This creates a clear lineage, ensuring every modification is fully traceable.
+
+The command below is ready to be sent. It instructs the LLM to change "Hello" to "Hey" and to provide a **patch** for the change.
+ 
+ \`\`\`
+ ${CHANGE_HELLO_TO_HEY_COMMAND}
+ \`\`\`
+ 
+ Click the link below to send the update command.
+ 
+ [**Send Message**]()
+            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(CHANGE_HELLO_TO_HEY_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"demo-3-blank"},{id:"demo-3-blank",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{n=MessageUtils.getMessageById(n.chat,e.parent_id);return!(!n||n.message.trim()!==CHANGE_HELLO_TO_HEY_COMMAND)},nextSceneId:"demo-3"},{id:"demo-3",action:"typeAndAppend",contentToType:`
+${DEMO_3}
+
+### What Happened
+
+In the previous demo, the LLM processed your request to change "Hello" to "Hey" in the JavaScript program.
+ 
+You should have received either a **code patch** (showing the exact changes) or the **full updated code**.
+
+*   **If you received a patch:** You might have seen a "Preview Changes" link. This means the patch is valid! Clicking it shows a side-by-side comparison, allowing you to review AI-generated changes before applying them.
+*   **If you received an "Error" message and a "Start Fix Patch Chat" button:** Don't worry! Sometimes LLMs generate imperfect patches. This button is your solution. Clicking it would guide you through correcting the patch or getting the full, corrected code.
+*   **If you received the full updated code:** Notice its header! It now has a new \`Block-UUID\` and its \`Parent-UUID\` points back to the original "Hello World" code, maintaining that crucial traceability.
+
+Regardless of the output format or whether a patch error occurred, if you inspect the header of the new code (or the patch metadata), you'll find a new \`Block-UUID\` and, more importantly, a \`Parent-UUID\` that points directly back to the \`Block-UUID\` of the original "Hello World" program. The version number was also incremented (e.g., from \`v1.0.0\` to \`v1.1.0\`).
+
+### Next Steps
+
+In this demo, we'll show you how to discover Analyzers using our AI-assisted search. 
 
 Analyzers are like the "Brains" behind our AI search. They can turn any text file into a "smart" one, and you don't need to write any code to do it! To learn more, you can explore the GitSense Chat help guide, which explains Analyzers in much greater detail.
 
-In this first demo, we'll show you how to discover Analyzers using our AI-assisted search. If you look at the chat input below, you'll see the following command is ready to be sent:
-
 \`\`\`
-${SHOW_ANALYZERS_AUTOMATED_COMMAND}
+${LIST_ANALYZERS_AUTOMATED_COMMAND}
 \`\`\`
-
 
 Click the link below to send this command. We'll explain the results once the search is finished and then move on to the next demo.
 
 [**Send Message**]()
-
-> **Chat Input Disabled:** The chat input is currently disabled, but will re-enable once the demo has finished.
-
-            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(SHOW_ANALYZERS_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"analyzer-list-detected"},{id:"analyzer-list-detected",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{var a,s;return!!MessageUtils.getMessageById(n.chat,e.parent_id).message.trimStart().startsWith(INTRO_SCENE1_TRIGGER_CONTENT)&&({blocks:n,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),s=n.find(e=>"code"===e.type&&"query"===e.language),!!(n.filter(e=>"gs-tool"===e.type).find(e=>"search"===e.toolData?.tool)&&s&&e.message.trimStart().startsWith("## AI Search Complete")&&SHOW_ANALYZERS_AUTOMATED_COMMAND.includes(s.content.trim())))},nextSceneId:"analyzer-list-commentary-and-demo-2"},{id:"analyzer-list-commentary-and-demo-2",action:"typeAndAppend",contentToType:`
-## Demo 2: Exploring Analyzer Schemas
+            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(LIST_ANALYZERS_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"demo-4-blank"},{id:"demo-4-blank",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{var a,s;return!!MessageUtils.getMessageById(n.chat,e.parent_id).message.trimStart().startsWith(DEMO_3)&&({blocks:n,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),s=n.find(e=>"code"===e.type&&"query"===e.language),!!(n.filter(e=>"gs-tool"===e.type).find(e=>"search"===e.toolData?.tool)&&s&&e.message.trimStart().startsWith("## AI Search Complete")&&LIST_ANALYZERS_AUTOMATED_COMMAND.includes(s.content.trim())))},nextSceneId:"demo-4"},{id:"demo-4",action:"typeAndAppend",contentToType:`
+${DEMO_4}
 
 ### What Happened
 
@@ -74,8 +126,8 @@ ${SHOW_ANALYZER_SCHEMA_AUTOMATED_COMMAND}
 Click the link below to send the next command and move on with the demo.
 
 [**Send Message**]()
-            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(SHOW_ANALYZER_SCHEMA_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"analyzer-schema-detected"},{id:"analyzer-schema-detected",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{var a,s;return!!MessageUtils.getMessageById(n.chat,e.parent_id).message.includes("Demo 2: Exploring Analyzer Schemas")&&({blocks:n,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),s=n.find(e=>"code"===e.type&&"query"===e.language),!!(n.filter(e=>"gs-tool"===e.type).find(e=>"search"===e.toolData?.tool)&&s&&e.message.trimStart().startsWith("## AI Search Complete")&&SHOW_ANALYZER_SCHEMA_AUTOMATED_COMMAND.includes(s.content.trim())))},nextSceneId:"analyzer-schema-commentary-and-demo-3"},{id:"analyzer-schema-commentary-and-demo-3",action:"typeAndAppend",contentToType:`
-## Demo 3: Performing Semantic Search
+            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(SHOW_ANALYZER_SCHEMA_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"demo-5-blank"},{id:"demo-5-blank",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{var a,s;return!!MessageUtils.getMessageById(n.chat,e.parent_id).message.includes(DEMO_4)&&({blocks:n,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),s=n.find(e=>"code"===e.type&&"query"===e.language),!!(n.filter(e=>"gs-tool"===e.type).find(e=>"search"===e.toolData?.tool)&&s&&e.message.trimStart().startsWith("## AI Search Complete")&&SHOW_ANALYZER_SCHEMA_AUTOMATED_COMMAND.includes(s.content.trim())))},nextSceneId:"demo-5"},{id:"demo-5",action:"typeAndAppend",contentToType:`
+${DEMO_5}
 
 ### What Happened
 
@@ -92,12 +144,12 @@ ${FIND_FILES_AUTOMATED_COMMAND}
 Click the link below to send the next command and move on with the demo.
 
 [**Send Message**]()
-            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(FIND_FILES_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"semantic-search-results-detected"},{id:"semantic-search-results-detected",triggerCondition:(e,t,n,o)=>{var a,s;return!!MessageUtils.getMessageById(n.chat,e.parent_id).message.includes("Demo 3: Performing Semantic Search")&&({blocks:n,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),s=n.find(e=>"code"===e.type&&"query"===e.language),!!(n.filter(e=>"gs-tool"===e.type).find(e=>"search"===e.toolData?.tool)&&s&&e.message.trimStart().startsWith("## AI Search Complete")&&FIND_FILES_AUTOMATED_COMMAND.includes(s.content.trim())))},action:"createBlankChildMessage",nextSceneId:"semantic-search-results-explained"},{id:"semantic-search-results-explained",action:"typeAndAppend",contentToType:`
-## Demo 4: Loading AI-Curated Context
+            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(FIND_FILES_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"demo-6-blank"},{id:"demo-6-blank",triggerCondition:(e,t,n,o)=>{var a,s;return!!MessageUtils.getMessageById(n.chat,e.parent_id).message.includes(DEMO_5)&&({blocks:n,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),s=n.find(e=>"code"===e.type&&"query"===e.language),!!(n.filter(e=>"gs-tool"===e.type).find(e=>"search"===e.toolData?.tool)&&s&&e.message.trimStart().startsWith("## AI Search Complete")&&FIND_FILES_AUTOMATED_COMMAND.includes(s.content.trim())))},action:"createBlankChildMessage",nextSceneId:"demo-6"},{id:"demo-6",action:"typeAndAppend",contentToType:`
+${DEMO_6}
 
 ### What Happened
 
-The semantic search found files with spelling mistakes across the 'Hello World' and 'Hey World' repositories. This shows how powerful GitSense Chat's Analyzers are at finding specific issues in your code using structured data. With Analyzers, anyone, technical or not, can easily find answers that matter to them, all without having to write a single line of code.
+The semantic search found files with spelling mistakes across the "Hello World" and "Hey World" repositories. This shows how GitSense Chat Analyzers can help LLMs turn natural-language queries into deterministic queries. With Analyzers, anyone-technical or not-can easily find answers that matter to them, all without having to write a single line of code.
 
 ### Next Steps
 
@@ -105,7 +157,7 @@ Now, we'll load the files we found into your chat's context. This shows how easy
 
 Click the **"Review, load and add"** link in the **previous message**
 
-![Review, load and add link](/api/v0/widgets/chat/app/static/introduction-demo-review-load-add-link-bordered.png)
+![Review, load and add link]({{base-url}}/introduction-demo-review-load-add-link-bordered.png)
 
 then do the following once the **Context Builder** loads:
 
@@ -114,12 +166,12 @@ then do the following once the **Context Builder** loads:
 3. Click the 'Add' button (the 'Load' button will turn into the 'Add' button).
 
 After clicking the 'Add' button, the Context Builder will close, and a new **Context Message** will be added to the chat, which will begin the next demo.
-            `,userActionRequired:!0,nextSceneId:"search-context-message-detected"},{id:"search-context-message-detected",triggerCondition:(e,t,n,o)=>{var a;return"context"===e.type&&({blocks:e,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),!!(e=e.find(e=>"gs-tool"===e.type&&"context-loader"===e.toolData?.tool)))&&8===(e.toolData?.config?.chatIds||[]).length},action:"createBlankChildMessage",nextSceneId:"context-loaded-commentary-and-demo-5"},{id:"context-loaded-commentary-and-demo-5",action:"typeAndAppend",contentToType:`
-## Demo 5: AI-Assisted Code Analysis
+            `,nextSceneId:"demo-7-blank"},{id:"demo-7-blank",triggerCondition:(e,t,n,o)=>{var a;return"context"===e.type&&({blocks:e,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),!!(e=e.find(e=>"gs-tool"===e.type&&"context-loader"===e.toolData?.tool)))&&8===(e.toolData?.config?.chatIds||[]).length},action:"createBlankChildMessage",nextSceneId:"demo-7"},{id:"demo-7",action:"typeAndAppend",contentToType:`
+${DEMO_7}
 
 ### What Happened
 
-You now have the files we found loaded into your chat's context. With our GitSense Chat Bridge, which transforms Git repositories into chat 'repositories,' loading data is incredibly simple. This allows you to focus on the problem itself rather than on how to incorporate context into the conversation.
+The files we discovered are now loaded into your chat's context. Thanks to the GitSense Chat Bridge, which turns Git repositories into chat-ready "repositories," loading data is a breeze. This lets you concentrate on solving the problem instead of worrying about how to bring context into the conversation.
 
 ### Next Steps
 
@@ -132,8 +184,8 @@ ${ANALYZE_AUTOMATED_COMMAND}
 Click the link below to send the next command and move on with the demo.
 
 [**Send Message**]()
-            `,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(ANALYZE_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,nextSceneId:"analyze-"},{id:"analysis-detected",triggerCondition:(e,t,n,o)=>MessageUtils.getMessageById(n.chat,e.parent_id).message.trim()===ANALYZE_AUTOMATED_COMMAND,action:"createBlankChildMessage",nextSceneId:"analysis-explained-and-demo-6"},{id:"analysis-explained-and-demo-6",action:"typeAndAppend",contentToType:`
-## Demo 6: Refining Context with LLMs
+            `,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(ANALYZE_AUTOMATED_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,nextSceneId:"demo-8-blank"},{id:"demo-8-blank",triggerCondition:(e,t,n,o)=>MessageUtils.getMessageById(n.chat,e.parent_id).message.trim()===ANALYZE_AUTOMATED_COMMAND,action:"createBlankChildMessage",nextSceneId:"demo-8"},{id:"demo-8",action:"typeAndAppend",contentToType:`
+${DEMO_8}
 
 ### What Happened
 
@@ -150,8 +202,8 @@ ${BUILD_CONTEXT_BUNDLE_COMMAND}
 Click the link below to send the next command and move on with the demo.
 
 [**Send Message**]()
-            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(BUILD_CONTEXT_BUNDLE_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"context-bundle-detected"},{id:"context-bundle-detected",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{if(MessageUtils.getMessageById(n.chat,e.parent_id).message.trim()===BUILD_CONTEXT_BUNDLE_COMMAND)return!0},nextSceneId:"context-bundle-explained-and-demo-7"},{id:"context-bundle-explained-and-demo-7",action:"typeAndAppend",contentToType:`
-## Demo 7: Loading Focused Context
+            `,pauseAfterTypingMs:DEMO_CONSTANTS.SCENE_TRANSITION_PAUSE_MS,postProcess:async(e,t,n,o)=>{n=n.querySelector("a");n?(await DemoUtils.simulateTyping(BUILD_CONTEXT_BUNDLE_COMMAND,o),n.onclick=e=>{e.preventDefault(),DemoUtils.sendMessage()}):console.error(`No send link in current scene ${t.id} found`)},nextSceneId:"demo-9-blank"},{id:"demo-9-blank",action:"createBlankChildMessage",triggerCondition:(e,t,n,o)=>{if(MessageUtils.getMessageById(n.chat,e.parent_id).message.trim()===BUILD_CONTEXT_BUNDLE_COMMAND)return!0},nextSceneId:"demo-9"},{id:"demo-9",action:"typeAndAppend",contentToType:`
+${DEMO_9}
 
 ### What Happened
 
@@ -161,15 +213,15 @@ The LLM just created a context bundle containing only the JavaScript and Rust fi
 
 With this focused context bundle, we'll load it into your chat. Click the **"Review, load and add"** link in the **previous message**
 
-![Review, load and add link in refined context message](/api/v0/widgets/chat/app/static/introduction-demo-refined-review-load-add-link-bordered.png)
+![Review, load and add link in refined context message]({{base-url}}/introduction-demo-refined-review-load-add-link-bordered.png)
 
 then do the following once the **Context Builder** loads:
 
 1. Click the checkbox in the table header to select all files.
 2. Click the 'Load' button.
 3. Click the 'Add' button (the 'Load' button will turn into the 'Add' button).
-            `,userActionRequired:!0,nextSceneId:"focused-context-detected"},{id:"focused-context-detected",triggerCondition:(e,t,n,o)=>{var a;return"context"===e.type&&({blocks:e,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),!!(e=e.find(e=>"gs-tool"===e.type&&"context-loader"===e.toolData?.tool)))&&2===(e.toolData?.config?.chatIds||[]).length},action:"createBlankChildMessage",nextSceneId:"focused-context-explained-and-demo-8"},{id:"focused-context-explained-and-demo-8",action:"typeAndAppend",contentToType:`
-## Demo 8: Managing Context for Reasoning and Cost
+            `,nextSceneId:"demo-10-blank"},{id:"demo-10-blank",triggerCondition:(e,t,n,o)=>{var a;return"context"===e.type&&({blocks:e,warnings:a}=CodeBlockUtils.extractCodeBlocks(e.message,{silent:!0}),!!(e=e.find(e=>"gs-tool"===e.type&&"context-loader"===e.toolData?.tool)))&&2===(e.toolData?.config?.chatIds||[]).length},action:"createBlankChildMessage",nextSceneId:"demo-10"},{id:"demo-10",action:"typeAndAppend",contentToType:`
+${DEMO_10}
 
 ### What Happened
 
@@ -181,25 +233,26 @@ You just loaded a more focused **context message** into your chat, with just the
 
 Click the **"Delete All Contexts Except Last"** link in the **previous message** as shown below:
 
-![Delete All Contexts Except Last](/api/v0/widgets/chat/app/static/introduction-demo-delete-all-contexts-except-last-link-bordered.png)
+![Delete All Contexts Except Last]({{base-url}}/introduction-demo-delete-all-contexts-except-last-link-bordered.png)
 
 By clicking the link, all context messages in this chat will be deleted except for the last one. Note, when context messages are merged or deleted, the original chat is untouched. Instead, a copy is made first, and only that copy is updated. Your current chat then becomes a child of the copied chat.
-            `,userActionRequired:!0,postProcess:async(e,t,n,o)=>{e=MessageUtils.getMessageById(o.chat,e.parent_id),o=o.renderedMessage[e.id]?.contentBody;if(o){e=o.querySelector(".gsc-delete-all-contexts-except-last-link");let t=e.onclick;e.onclick=null,e.addEventListener("click",async e=>{t(e,e=>{MessageService.setChat(e)})})}else console.error("introductionDemo: No parent message found for scene "+t.id)},nextSceneId:"removed-old-context-detected"},{id:"removed-old-context-detected",triggerCondition:(e,t,n,o)=>{o=o.filter(e=>"context"===e.type);return!(!e.message.includes("Demo 8")||1!==o.length)},action:"createBlankChildMessage",nextSceneId:"removed-old-context-explained-and-conclusion"},{id:"removed-old-context-explained-and-conclusion",action:"typeAndAppend",contentToType:`
+            `,postProcess:async(e,t,n,o)=>{e=MessageUtils.getMessageById(o.chat,e.parent_id),o=o.renderedMessage[e.id]?.contentBody;if(o){e=o.querySelector(".gsc-delete-all-contexts-except-last-link");let t=e.onclick;e.onclick=null,e.addEventListener("click",async e=>{t(e,e=>{MessageService.setChat(e)})})}else console.error("introductionDemo: No parent message found for scene "+t.id)},nextSceneId:"conclusion-blank"},{id:"conclusion-blank",triggerCondition:(e,t,n,o)=>{o=o.filter(e=>"context"===e.type);return!(!e.message.includes(DEMO_10)||1!==o.length)},action:"createBlankChildMessage",nextSceneId:"conclusion"},{id:"conclusion",action:"typeAndAppend",contentToType:`
 ## Conclusion
 
 ### What Happened
 
-You've now removed the older context, so only the most recent remains. This entire process, from AI-assisted search to LLM-refined context and now focused management, highlights how GitSense Chat, with the right analyzers, can help build relevant contexts close to the speed of thought.
+You've now removed the older context, so only the most recent remains. This entire process, from AI-assisted search to LLM-refined context and now focused management, highlights how GitSense Chat can build context for LLMs nearly at the speed of thought.
 
-### Further Learning
+### Truly Unique
 
-To learn more about managing contexts, and to dive deeper into all the powerful features we've mentioned (like traceability and interactive messages), we encourage you to check out our documentation and try our detailed Context Management tutorial. These resources offer in-depth guidance on using GitSense Chat's powerful context management features.
+This brings us to the end of the introduction. Our goal with GitSense Chat is to fundamentally change how you work with AI, moving beyond simple prompts and responses. We believe the conversation itself is the most valuable asset, and we've built a platform that treats it that way.
 
----
+You've seen glimpses of what makes this approach different:
 
-### GitSense Chat: Reimagining AI-Assisted Software Development.
+*   The power to precisely control the AI's knowledge base (**Context Engineering**).
+*   The ability to transform any text into a queryable, intelligent resource (**Custom Analyzers**).
 
-This demo has given you a glimpse into how GitSense Chat is fundamentally changing the way you interact with LLMs. You've experienced **Context Engineering** firsthand, seeing how you can go beyond simple prompts to curate the LLM's knowledge base quickly and precisely. Through **AI Search** powered by custom Analyzers, you've seen how GitSense Chat makes technical insights accessible to everyone.
+### Personal Help Guide
 
-GitSense Chat is a versatile platform designed to help you interact with your data, including your chat conversations, more effectively using AI. While you may want to use other tools to generate code, it makes sense to start conversations with GitSense Chat and to use it to build your knowledge base to ensure you can seamlessly interact with your data using AI.
-            `,nextSceneId:null}]};function isAnalyzerSearchMessage(e){return"assistant"===e.role&&e.message.trimStart().startsWith("## AI Search Complete")&&e.message.includes(SHOW_ANALYZERS_AUTOMATED_COMMAND.replace(/!ask /,""))}module.exports={introductionDemo:introductionDemo};
+This is just the beginning. To explore further, make sure to load your **Personal Help Guide** from the home page. You can chat directly with it to learn more about how our unique context-engineering capabilities, AI-powered search, and wiki-like knowledge system can genuinely help us work smarter and faster, together.
+            `,nextSceneId:null}]};function isAnalyzerSearchMessage(e){return"assistant"===e.role&&e.message.trimStart().startsWith("## AI Search Complete")&&e.message.includes(LIST_ANALYZERS_AUTOMATED_COMMAND.replace(/!ask /,""))}module.exports={introductionDemo:introductionDemo};
